@@ -1,0 +1,129 @@
+
+/************ Header *********************/
+.Fix-header{
+	border : 2px solid black;
+	height: 120px;
+	max-width: 100%;
+	position: sticky;
+	top : 0;
+	background-color: rgb(192,192,192);
+	z-index: 1;
+}
+
+.lable{
+	float :right;
+	margin-right: 27%;
+	margin-top: 0px;
+	font-family: "Amita";
+}
+
+ /*-------------------button-----------------*/
+
+
+.button{
+	border: 2px solid black;
+	width: 90px;
+	height: 40px;
+	margin-right: 10px;
+	margin-top: 5px;
+	float: right;
+}
+
+.button1{
+	border: 2px solid black;
+	width: 170px;
+	height: 40px;
+	margin-right: 10px;
+	margin-top: 5px;
+	float: right;
+}
+
+.button a:link,.button a:visited, .button1 a:link,.button1 a:visited{
+	position: relative;	
+	display: block;
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 1.7vw;
+	text-align: center;
+	padding :7px;
+	background-color: red;
+}
+
+.button a:hover, .button a:active, .button1 a:hover, .button1 a:active{
+	color : sblack;
+	border: 1px dotted red;
+}
+
+/*-------------------logo-----------------------*/
+
+.logo{
+	position: relative;
+	height: 50px;
+	max-width: 100px;
+}
+
+.logo img{
+	position: relative;
+	height: 50px;
+	max-width: 100px;
+	margin-top: 5px;
+	margin-left: 5px;
+}
+
+/*----------------Navigation------------------*/
+
+.nav{
+	position: relative;
+	max-width: 100%;
+	height: 50px;
+	background-color: black;
+	
+}
+.nav p{
+	text-align: center;
+	font-variant: small-caps;
+	font-size: 2.5vw;
+	color: white;
+}
+/*---------------Icon------------------------*/
+
+.icon img{
+	margin-top: 50px;
+	margin-left: 46%;
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	
+}
+/*--------------FORM--------------------------*/
+
+.login-form{
+	margin-top: 50px;
+	text-align: center;
+	font-family: 'Autour One';
+	text-decoration: none;
+}
+
+.login-form form{
+	border:2px solid black;
+	border-radius: 30%;
+	max-width: 50%;
+	margin-left: 25%;
+	padding-top: 20px;
+	text-decoration: none;
+}
+
+.form-button{
+	font-size: 1.5vw;
+
+}
+/**********Footer***********/
+
+.footer{
+	clear: both;
+	border-top: 2px solid black;
+	margin-top: 50px;
+	height: 80px;
+	font-family: 'Autour One';
+}
