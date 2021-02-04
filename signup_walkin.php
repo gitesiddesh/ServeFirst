@@ -35,7 +35,7 @@
 	<img src="images/Add User.jpeg"><br>
 </div>
 <div class="login-form">
-	<form>
+	<form method="POST" action="signup_walkin.php">
 		<label>Full Name :</label>&nbsp;&nbsp;<input type="text" name="Name" pattern="^[A-Za-z\s]+" title="Only letters" required>
 		<br><br>
 		<label>Email :</label>&nbsp;&nbsp;<input type="Email" name="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
@@ -61,3 +61,60 @@
 
 </body>
 </html>
+
+<?php
+
+if(isset($_POST['s']))
+	{
+		$conn=pg_connect("host=localhost user=sidg dbname=sidg") or die("Couldn't Connect");
+
+		$fullname=$_POST['Name'];
+		$email=$_POST['Email'];
+		$contact=$_POST['Contact'];
+		$address=$_POST['Location'];
+		$username=$_POST['UserName'];
+		$password=$_POST['Password'];
+
+		$emailVal="select 1 from walkin where email='$email'";
+		$emailValResult=pg_query($conn,$emailVal);
+		echo "$emailValResult";
+
+		$usernameVal="select 1 from walkin where username='$username'";
+		$usernameValResult=pg_query($conn,$usernameVal);
+		echo "$usernameValResult";
+
+		if(pg_fetch_row($emailValResult)>0)
+		{
+				?><script type="text/javascript">
+					alert("Email already Registred!!!");
+			    </script><?php
+		}
+		else if(pg_fetch_row($usernameValResult)>0)
+		{
+			?><script type="text/javascript">
+					alert("User Name already taken!!! Try another..");
+			</script><?php
+		}
+		else if($password<8)
+		{
+			
+			?><script type="text/javascript">
+				alert("Password Must be at least 8 characters");
+			</script><?php
+		}
+		else
+		{
+			$insert= "INSERT INTO walkin(username,password,fullname,email,contact,address) 
+						VALUES ('$username','$password','$fullname','$email','$contact','$address')";
+			
+			$insertResult= pg_query("$conn,$insert") or die("Couldn't Execute");
+
+			?><script type="text/javascript">
+				alert("SIGNUP SUCCESSFUL");
+			</script><?php
+			echo "<script>location.href='login.php';</script>";
+		}
+
+	}	
+
+?>
