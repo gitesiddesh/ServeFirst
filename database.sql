@@ -19,7 +19,7 @@ create table walkin(
 	owner varchar(50),
 	company varchar(50),
 	email varchar(50),
-	contact bigint,
+	contact varchar(10),
 	address varchar(150)
 	);
 

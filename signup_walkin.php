@@ -49,6 +49,8 @@
 		<br><br>
 		<label>Password :</label>&nbsp;&nbsp;
 		<input type="Password" name="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required><br><br>
+		<label>Re-Enter Password :</label>&nbsp;&nbsp;
+		<input type="Password" name="RePassword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required><br><br>
 		<input class="form-button" type="submit" name="submit"><br><br>
 	</form>	
 </div>
@@ -70,20 +72,21 @@
 	if($_SERVER["REQUEST_METHOD"] == "POST"){	
 		
 		require_once("phpConn.php"); 
-		$fullname=$_POST['Name']; echo "$fullname";
+		$fullname=$_POST['Name'];
 		$email=$_POST['Email'];
 		$contact=$_POST['Contact'];
 		$address=$_POST['Location'];
 		$username=$_POST['UserName'];
 		$password=$_POST['Password'];
+		$repassword=$_POST['RePassword'];
 
 		$emailVal="select 1 from walkin where email='$email'";
 		$emailValResult=pg_query($conn,$emailVal);
-		echo "$emailValResult";
+		
 
 		$usernameVal="select 1 from walkin where username='$username'";
 		$usernameValResult=pg_query($conn,$usernameVal);
-		echo "$usernameValResult";
+		
 
 		if(pg_fetch_row($emailValResult)>0)
 		{
@@ -96,6 +99,12 @@
 			?><script type="text/javascript">
 					alert("User Name already taken!!! Try another..");
 			</script><?php
+		}
+		else if($password != $repassword)
+		{
+			?><script type="text/javascript">
+					alert("Password do not match!!! Retry...");
+				</script><?php
 		}
 		else
 		{
