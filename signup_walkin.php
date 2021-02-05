@@ -35,15 +35,20 @@
 	<img src="images/Add User.jpeg"><br>
 </div>
 <div class="login-form">
-	<form method="POST" action="signup_walkin.php">
+	<form method="post" action="signup_walkin.php">
 		<label>Full Name :</label>&nbsp;&nbsp;<input type="text" name="Name" pattern="^[A-Za-z\s]+" title="Only letters" required>
 		<br><br>
-		<label>Email :</label>&nbsp;&nbsp;<input type="Email" name="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
-		<label>Contact No. :</label>&nbsp;&nbsp;+91<input type="text" name="Contact" pattern="[0-9]{10}" required><br><br>
-		<label>Location :</label>&nbsp;&nbsp; <textarea name="Location" rows="5" required></textarea><br><br>
-		<label>User Name :</label>&nbsp;&nbsp;<input type="text" name="UserName">
+		<label>Email :</label>&nbsp;&nbsp;
+		<input type="Email" name="Email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
+		<label>Contact No. :</label>&nbsp;&nbsp;+91
+		<input type="text" name="Contact" pattern="[0-9]{10}" required><br><br>
+		<label>Location :</label>&nbsp;&nbsp; 
+		<textarea name="Location" rows="5" required></textarea><br><br>
+		<label>User Name :</label>&nbsp;&nbsp;
+		<input type="text" name="UserName">
 		<br><br>
-		<label>Password :</label>&nbsp;&nbsp;<input type="Password" name="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required><br><br>
+		<label>Password :</label>&nbsp;&nbsp;
+		<input type="Password" name="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required><br><br>
 		<input class="form-button" type="submit" name="submit"><br><br>
 	</form>	
 </div>
@@ -61,14 +66,11 @@
 
 </body>
 </html>
-
 <?php
-
-if(isset($_POST['s']))
-	{
-		$conn=pg_connect("host=localhost user=sidg dbname=sidg") or die("Couldn't Connect");
-
-		$fullname=$_POST['Name'];
+	if($_SERVER["REQUEST_METHOD"] == "POST"){	
+		
+		require_once("phpConn.php"); 
+		$fullname=$_POST['Name']; echo "$fullname";
 		$email=$_POST['Email'];
 		$contact=$_POST['Contact'];
 		$address=$_POST['Location'];
@@ -95,26 +97,18 @@ if(isset($_POST['s']))
 					alert("User Name already taken!!! Try another..");
 			</script><?php
 		}
-		else if($password<8)
-		{
-			
-			?><script type="text/javascript">
-				alert("Password Must be at least 8 characters");
-			</script><?php
-		}
 		else
 		{
 			$insert= "INSERT INTO walkin(username,password,fullname,email,contact,address) 
 						VALUES ('$username','$password','$fullname','$email','$contact','$address')";
 			
-			$insertResult= pg_query("$conn,$insert") or die("Couldn't Execute");
+			$insertResult= pg_query($conn,$insert) or die("Couldn't Execute");
 
 			?><script type="text/javascript">
 				alert("SIGNUP SUCCESSFUL");
 			</script><?php
 			echo "<script>location.href='login.php';</script>";
 		}
-
-	}	
-
+	}
+	
 ?>
