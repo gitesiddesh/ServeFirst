@@ -5,7 +5,7 @@
 	<title>Service</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width= device-width, initial-scale=1.0">
-	<link rel="stylesheet" type="text/css" href="serviceRequest.css">
+	<link rel="stylesheet" type="text/css" href="acceptServiceRequest.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
 	<link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
