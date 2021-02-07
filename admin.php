@@ -39,7 +39,7 @@
 	</div>
 </div>
 <div class="welcome">
-	Welcome Admin
+	Welcome <?php echo $_SESSION['username']; ?>
 	<i class="material-icons" style="font-size: 3vw">person</i>
 </div>
 

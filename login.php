@@ -1,3 +1,7 @@
+<?php
+    session_start();
+    //echo "session started";
+?>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -39,7 +43,7 @@
 </div>
 <div class="login-form">
 
-	<form>
+	<form method="post" action="login.php">
 
 		<label>User Name :</label>&nbsp;&nbsp;<input type="text" name="UserName" required>		<br><br>
 
@@ -82,3 +86,131 @@
 
 </body>
 </html>
+
+<?php
+
+	if($_SERVER["REQUEST_METHOD"] == "POST")
+	{
+		require_once('phpConn.php');
+
+		$username = $_POST['UserName'];
+		$password = $_POST['Password'];
+		$type = $_POST['account'];
+
+		//echo "$username, $password, $type";
+        if($type == "Admin")
+        {
+            $checkUsername = "select 1 from admin where username = '$username'";
+            $checkPassword = "select 1 from admin where password = '$password'";
+
+            $usernameResult = pg_query($conn, $checkUsername);
+            $passwordResult = pg_query($conn, $checkPassword);
+
+            if(pg_fetch_row($usernameResult)<=0)
+            {
+                ?><script type="text/javascript">
+                alert("Invalid Username!!! Please try again...");
+                </script>
+                <?php
+                //echo "incorrect username";
+               // echo pg_fetch_row($usernameResult);
+            }
+            else
+            {
+                //echo "correct username";
+                //echo pg_fetch_row($usernameResult);
+                if(pg_fetch_row($passwordResult)<=0)
+                {
+                    ?><script type="text/javascript">
+                        alert("Invalid Password!!! Please try again...");
+                    </script>
+                    <?php
+                }
+                else
+                {
+                    $_SESSION['username'] = $username;
+                    //echo "username =". $_SESSION['username'];
+
+                   /* ?><script type="text/javascript">
+                    alert("LOGIN SUCCESSFUL");
+                    </script><?php*/
+                    echo "<script>location.href='admin.php';</script>";
+                }
+            }
+        }
+        else if($type == "Walk-In")
+        {
+            $checkUsername = "select 1 from walkin where username = '$username'";
+            $checkPassword = "select 1 from walkin where password = '$password'";
+
+            $usernameResult = pg_query($conn, $checkUsername);
+            $passwordResult = pg_query($conn, $checkPassword);
+
+            if(pg_fetch_row($usernameResult)<=0)
+            {
+                ?><script type="text/javascript">
+                alert("Invalid Username!!! Please try again...");
+                </script>
+                <?php
+            }
+            else
+            {
+                if(pg_fetch_row($passwordResult)<=0)
+                {
+                    ?><script type="text/javascript">
+                        alert("Invalid Password!!! Please try again...");
+                    </script>
+                    <?php
+                }
+                else
+                {
+                    $_SESSION['username'] = $username;
+
+                    echo "<script>location.href='userHome.php';</script>";
+                }
+            }
+        }
+        else if($type == "Corporate")
+        {
+            $checkUsername = "select 1 from corporate where username = '$username'";
+            $checkPassword = "select 1 from corporate where password = '$password'";
+
+            $usernameResult = pg_query($conn, $checkUsername);
+            $passwordResult = pg_query($conn, $checkPassword);
+
+            if(pg_fetch_row($usernameResult)<=0)
+            {
+                ?><script type="text/javascript">
+                alert("Invalid Username!!! Please try again...");
+                </script>
+                <?php
+            }
+            else
+            {
+
+                if(pg_fetch_row($passwordResult)<=0)
+                {
+                    ?><script type="text/javascript">
+                        alert("Invalid Password!!! Please try again...");
+                    </script>
+                    <?php
+                }
+                else
+                {
+                    $_SESSION['username'] = $username;
+
+                    echo "<script>location.href='corporateHome.php';</script>";
+                }
+            }
+        }
+        else
+        {
+            ?><script type="text/javascript">
+                alert("Please select account type.");
+            </script>
+            <?php
+        }
+
+	}
+
+?>
