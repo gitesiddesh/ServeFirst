@@ -35,7 +35,7 @@
 	<img src="images/Book_icon.png"><br>
 </div>
 <div class="login-form">
-	<form>
+	<form method="post" action="test.php">
 		<label>Need for help :</label>&nbsp;&nbsp; 
 		<select name="help" required>
 			<option value="Desktop" selected>Desktop</option>
@@ -45,8 +45,8 @@
 		<label>Description about issue :</label><br>&nbsp;&nbsp; <textarea name="Description" rows="5" required></textarea><br><br>
 		
 		<label>Location :</label>&nbsp;&nbsp; 
-		<input type="radio" name="Location_rad" onclick="textFieldDisable()"><label>Use default</label>
-		<input type="radio" name="Location_rad" onclick="textFieldEnable()"><label>Add new</label><br><br>
+		<input type="radio" name="Location_rad" value="default" onclick="textFieldDisable()"><label>Use default</label>
+		<input type="radio" name="Location_rad" value="new" onclick="textFieldEnable()"><label>Add new</label><br><br>
 		&nbsp;&nbsp;
 		<textarea id="textarea" name="Location" rows="5"></textarea><br><br>
 		<label>Date :</label>&nbsp;&nbsp;<input type="date" name="Date">

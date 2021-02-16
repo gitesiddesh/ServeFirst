@@ -1,6 +1,14 @@
 <div class="Fix-header">
 	<div class="button">
-		<a href="login.php">Login</a>
+		<a 
+		href="
+		<?php 
+			if(isset($_SESSION['username'])) 
+				echo $_SESSION['redirectPage']; 
+			else    
+				echo "login.php";
+			
+		?>">Login</a>
 	</div>
 
 	<div class="button">

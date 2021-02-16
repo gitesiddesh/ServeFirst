@@ -1,7 +1,4 @@
-<?php
-    session_start();
-    //echo "session started";
-?>
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -120,6 +117,7 @@
                 else
                 {
                     $_SESSION['username'] = $username;
+                    $_SESSION['redirectPage'] = "admin.php";
                     //echo "username =". $_SESSION['username'];
 
                    /* ?><script type="text/javascript">
@@ -156,7 +154,8 @@
                 else
                 {
                     $_SESSION['username'] = $username;
-
+                    $_SESSION['redirectPage'] = "userHome.php";
+                    echo "username =". $_SESSION['username'];
                     echo "<script>location.href='userHome.php';</script>";
                 }
             }
@@ -189,7 +188,7 @@
                 else
                 {
                     $_SESSION['username'] = $username;
-
+                    $_SESSION['redirectPage'] = "corporateHome.php";
                     echo "<script>location.href='corporateHome.php';</script>";
                 }
             }

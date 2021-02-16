@@ -14,7 +14,7 @@
 
 <div class="Fix-header">
 	<div class="button">
-		<a href="index.html">Home</a>
+		<a href="index.php">Home</a>
 	</div>
 
 	<h1 class="lable">

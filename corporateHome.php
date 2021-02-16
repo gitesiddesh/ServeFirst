@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -20,7 +21,7 @@
 		<a href="#">Profile</a>
 		<div class="drop-button">
 			<a style="background-color: rgb(111,111,111);" href="book_amc.php">Edit Profile</a>
-			<a style="background-color: rgb(111,111,111);" href="index.html">Logout</a>
+			<a style="background-color: rgb(111,111,111);" href="logout.php">Logout</a>
 		</div>
 	</div>
 
@@ -58,16 +59,7 @@
 	</div>	
 </div>
 <div class="welcome">
-	<?php
-		$conn=pg_connect("host=localhost dbname=sidg user=sidg password=sidg") or die("Couldn't Connect");
-		$Name="siddesh";
-		$query="select * from customer where first_name= '$Name'";
-		$Result=pg_query($conn,$query);
-
-		$row=pg_fetch_assoc($Result);
-		echo "Welcome ".$row['first_name']." ".$row['last_name']."!!!";	
-		pg_close($conn);
-	?>
+Welcome <?php echo $_SESSION['username']; ?>
 </div>
 <div class="services-head">
 	<i class="material-icons" style="font-size: 2.5vw">build_circle</i>
