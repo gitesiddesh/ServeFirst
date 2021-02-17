@@ -31,7 +31,7 @@
 
 	<div class="nav">
 		<ul><h2>
-			<li style="margin-top: 15px"><a style ="background-color :red" href="#" target="_blank">Home</a></li>
+			<li style="margin-top: 15px"><a style ="background-color :red" href="#">Home</a></li>
 			<li class="dropdown" style="margin-top: 15px"><a href="#">Services</a>
 				<div class="dropdown-content">
 						<a href="#">Computer</a>
@@ -41,7 +41,7 @@
 			</li>
 			<li style="margin-top: 15px"><a href="#">AMC Services</a></li>
 			<li><a href="#">Contact Us</a></li>
-			<li><a href="aboutus.html">About Us</a></li></h2>
+			<li><a href="aboutus.php">About Us</a></li></h2>
 		</ul>
 	</div>	
 </div>

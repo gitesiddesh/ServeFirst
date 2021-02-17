@@ -115,7 +115,7 @@ Welcome <?php echo $_SESSION['username']; ?>
 			<td>11/11/2020</td>
 			<td>12:30 PM</td>
 			<td>Completed</td>
-			<td><form action=register.php method="post">
+			<td><form action=bill.php method="post">
 							<input type="hidden" name="step" value="<?php echo $row["reg_no"];?>" />
 							<input type="submit" value="Generate">
 				</form>

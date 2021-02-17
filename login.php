@@ -18,7 +18,7 @@
 
 <div class="Fix-header">
 	<div class="button">
-		<a href="index.html">Home</a>
+		<a href="index.php">Home</a>
 	</div>
 
 	<h1 class="lable">
@@ -118,6 +118,7 @@
                 {
                     $_SESSION['username'] = $username;
                     $_SESSION['redirectPage'] = "admin.php";
+                    $_SESSION['userType'] = "Admin";
                     //echo "username =". $_SESSION['username'];
 
                    /* ?><script type="text/javascript">
@@ -155,7 +156,8 @@
                 {
                     $_SESSION['username'] = $username;
                     $_SESSION['redirectPage'] = "userHome.php";
-                    echo "username =". $_SESSION['username'];
+                    $_SESSION['userType'] = "Walkin";
+                    
                     echo "<script>location.href='userHome.php';</script>";
                 }
             }
@@ -189,6 +191,7 @@
                 {
                     $_SESSION['username'] = $username;
                     $_SESSION['redirectPage'] = "corporateHome.php";
+                    $_SESSION['userType'] = "Corporate";
                     echo "<script>location.href='corporateHome.php';</script>";
                 }
             }

@@ -19,8 +19,10 @@
 <div class="Fix-header">
 
 	<div class="button">
-		<a href="logout.php">Logout</a>
+	<a href="#">Profile</a>
 		<div class="drop-button">
+			<a style="background-color: rgb(111,111,111);" href="book_amc.php">Edit Profile</a>
+			<a style="background-color: rgb(111,111,111);" href="logout.php">Logout</a>
 		</div>
 	</div>
 	

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -28,7 +29,13 @@
 
 	<div class="nav">
 		<ul><h2>
-			<li style="margin-top: 15px"><a href="index.php">Home</a></li>
+			<li style="margin-top: 15px"><a href="<?php 
+			if(isset($_SESSION['username'])) 
+				echo $_SESSION['redirectPage']; 
+			else    
+				echo "index.php";
+			
+		?>">Home</a></li>
 			<li class="dropdown" style="margin-top: 15px"><a href="#">Services</a>
 				<div class="dropdown-content">
 						<a href="#">Computer</a>

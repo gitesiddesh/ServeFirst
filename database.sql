@@ -30,8 +30,8 @@ create table service(
 	helpfor varchar(50),
 	description varchar(200),
 	address varchar(150),
-	date date,
-	time time,
+	date varchar(10),
+	time varchar(10),
 	status varchar(20),
 	billamount bigint
 );
