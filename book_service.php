@@ -88,7 +88,7 @@
 
 <?php
 
-if($_SERVER["REQUEST_METHOD"] == "POST")
+if($_SERVER["REQUEST_METHOD"] == "POST") 
 {
 			require_once('phpConn.php');
 
@@ -152,8 +152,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST")
 
 			?><script type="text/javascript">
 				alert("Service Requested Successfully!!!");
-			</script><?php
-			echo "<script>location.href='userHome.php';</script>";
+			</script>
+			<script>location.href='<?php echo $_SESSION['redirectPage']; ?>';</script>
+			<?php
 		}
 
 ?>

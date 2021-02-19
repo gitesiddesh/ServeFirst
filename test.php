@@ -12,13 +12,14 @@
 
 require_once('phpConn.php');
 
-$help = $_POST['help'];
-$description = $_POST['Description']; 
+$plan = $_POST['plan'];
+$help = $_POST['help']; echo $help;
+$noOfMachines = $_POST['Machines'];
 $add_type = $_POST['Location_rad']; 
 $username = $_SESSION['username']; //echo $username;
 $userType = $_SESSION['userType']; //echo $userType;
 
-$regnoQuery = pg_query($conn,"select max(regno) from service") or die("Couldn't Execute");
+$regnoQuery = pg_query($conn,"select max(regno) from amcservice") or die("Couldn't Execute");
 $regnoFetch = pg_fetch_assoc($regnoQuery);
 $regno = $regnoFetch['max']+1; //echo $regno+1;
 
@@ -30,7 +31,7 @@ if($add_type == "new"){
 }
 else    
  {
-     $addQuery = "select address from walkin where username = '$username'";
+     $addQuery = "select address from corporate where username = '$username'";
      $addQueryResult = pg_query($conn,$addQuery) or die("Couldn't Execute");
      
      $addFetch = pg_fetch_assoc($addQueryResult);
@@ -40,14 +41,10 @@ else
  }   
 
 $date = $_POST['Date'];
-$time = $_POST['Time'];  //echo $time;
+
 
 $todayDate = date("Y-m-d");
 //echo $todayDate;
-
-$currentTime = 2+date("H:i");
-//echo $currentTime;
-
 
 
 if($date < $todayDate)
@@ -58,20 +55,11 @@ if($date < $todayDate)
     <?php die();
 
 }
-else if($date == $todayDate)
-{
-    if($time < $currentTime){
-        ?> <script type="text/javascript">
-        alert('Select time at least 2 hours from current time.');
-        </script>
-        <?php die();
-    }
-}
 
-$insert = pg_query($conn,"INSERT INTO service(regno,username,usertype,helpfor,description,address,date,time,status,billamount) VALUES($regno,'$username','$userType','$help','$description','$add','$date','$time','pending',0000)") or die("Couldn't Execute");
+$insert = pg_query($conn,"INSERT INTO amcservice(regno,username,plan,noofmachines,typeofmachine,address,startdate,status,billamount) VALUES($regno,'$username','$plan',$noOfMachines,'$help','$add','$date','pending',0000)") or die("Couldn't Execute");
 
     ?><script type="text/javascript">
         alert("Service Requested Successfully!!!");
     </script><?php
-    echo "<script>location.href='userHome.php';</script>";
+    echo "<script>location.href='corporateHome.php';</script>";
 ?>

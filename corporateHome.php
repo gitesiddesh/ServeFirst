@@ -1,4 +1,13 @@
-<?php session_start(); ?>
+<?php 
+    session_start(); 
+    if(!isset($_SESSION['username'])){
+        ?> <script type="text/javascript">
+                alert('You have been LOGGED OUT please LOGIN again.');
+            </script>
+        <?php 
+            echo "<script>location.href='login.php';</script>";
+    }
+?>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -55,7 +64,7 @@
 			</li>
 			<li style="margin-top: 15px"><a href="#">AMC Services</a></li>
 			<li><a href="#">Contact Us</a></li>
-			<li><a href="aboutus.html">About Us</a></li></h2>
+			<li><a href="aboutus.php">About Us</a></li></h2>
 	</div>	
 </div>
 <div class="welcome">
@@ -70,28 +79,23 @@ Welcome <?php echo $_SESSION['username']; ?>
 		<tr>
 			<th>Sr. no</th>
 			<th>Help For</th>
+			<th>Description</th>
 			<th>Date</th>
 			<th>Time</th>
 			<th>Status</th>
 		</tr>
-		<tr>
-			<td>1.</td>
-			<td>Printer</td>
-			<td>12/12/2020</td>
-			<td>12:30 PM</td>
-			<td>Accepted</td>
-		</tr>
-			<!--?php
-			$conn=pg_connect("host=localhost dbname=sidg user=sidg password=sidg") or die("Couldn't Connect");
-			$Name="siddesh";
-			$query="select * from customer where first_name= '$Name'";
+		<?php
+			require_once('phpConn.php');
+			$username = $_SESSION['username'];
+			$userType = $_SESSION['userType'];
+			$query="select helpfor,description,date,time,status from service where username='$username' AND usertype='$userType' AND (status='pending' OR status='accepted')";
 			$Result=pg_query($conn,$query);
-
-			$row=pg_fetch_assoc($Result);
+			$i=0;
+			while($row=pg_fetch_assoc($Result)){
+				echo "<tr><td>".++$i."</td><td>".$row['helpfor']."</td><td>".$row['description']."</td><td>".$row['date']."</td><td>".$row['time']."</td><td>".$row['status']."</td></tr>";
+			}
 			
-			echo "<tr><td>".$row['reg_no']."</td><td>".$row['first_name']."</td><td>".$row['last_name']."</td></tr>";
-			pg_close($conn);
-		?-->
+		?>
 </table>
 
 <div class="services-head">
@@ -106,20 +110,38 @@ Welcome <?php echo $_SESSION['username']; ?>
 			<th>No. of Machines</th>
 			<th>Type of Machine</th>
 			<th>Start Date</th>
+			<th>End Date</th>
+			<th>status</th>
 			<th>Bill</th>
 		</tr>
-		<tr>
-			<td>1.</td>
-			<td>Plan 1</td>
-			<td>30</td>
-			<td>Desktop</td>
-			<td>12/12/2020</td>
-			<td><form action=register.php method="post">
-							<input type="hidden" name="step" value="<?php echo $row["reg_no"];?>" />
-							<input type="submit" value="Generate">
-				</form>
-			</td>
-		</tr>
+		<?php
+			
+			$query="select regno,plan,noofmachines,typeofmachine,startdate,status from amcservice where username='$username' AND (status='pending')";
+			$Result=pg_query($conn,$query);
+			$i=0;
+			while($row=pg_fetch_assoc($Result)){
+
+				$date = strtotime($row['startdate']);
+
+				if($row['plan']=='Plan1')
+					$Date = strtotime('+1 years',$date);
+				else if($row['plan']=='Plan2')
+					$Date = strtotime('+2 years',$date);
+				else if($row['plan']=='Plan3')
+					$Date = strtotime('+3 years',$date);
+
+				$endDate = date('Y-m-d',$Date);
+				echo "<tr><td>".++$i."</td><td>".$row['plan']."</td><td>".$row['noofmachines']."</td><td>".$row['typeofmachine']."</td><td>".$row['startdate']."</td><td>".$endDate."</td><td>".$row['status']."</td>";
+				?><td>
+					<form action="bill.php" method = "post">
+						<input type = "hidden" name = "regno" value="<?php echo $row['regno'];?>">
+						<input type = "submit" value = "Generate"> 
+					</form>
+					</td> </tr> 
+				<?php
+			}
+			
+		?>
 		
 </table>
 
@@ -132,23 +154,32 @@ Welcome <?php echo $_SESSION['username']; ?>
 		<tr>
 			<th>Sr. no</th>
 			<th>Help For</th>
+			<th>Description</th>
 			<th>Date</th>
 			<th>Time</th>
 			<th>Status</th>
 			<th>Bill</th>
 		</tr>
-		<tr>
-			<td>1.</td>
-			<td>Laptop</td>
-			<td>11/11/2020</td>
-			<td>12:30 PM</td>
-			<td>Completed</td>
-			<td><form action=register.php method="post">
-							<input type="hidden" name="step" value="<?php echo $row["reg_no"];?>" />
-							<input type="submit" value="Generate">
-				</form>
-			</td>
-		</tr>
+
+		<?php
+		
+			$query="select regno,helpfor,description,date,time,status from service where username='$username' AND usertype='$userType' AND (status='completed')";
+			$Result=pg_query($conn,$query);
+			$i=0;
+			while($row=pg_fetch_assoc($Result)){
+				echo "<tr><td>".++$i."</td><td>".$row['helpfor']."</td><td>".$row['description']."</td><td>".$row['date']."</td><td>".$row['time']."</td><td>".$row['status']."</td>";
+				
+				?><td>
+					<form action="bill.php" method = "post">
+						<input type = "hidden" name = "regno" value="<?php echo $row['regno'];?>">
+						<input type = "submit" value = "Generate"> 
+					</form>
+					</td> </tr> 
+				<?php
+			}
+			pg_close($conn);
+		?>
+		
 </table>
 
 <?php include 'footer.php'; ?>
