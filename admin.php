@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php include 'sessionStart.php'; ?>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -60,32 +60,23 @@
 		</tr>
 		<?php
 
-			$conn=pg_connect("host=localhost dbname=sidg user=sidg password=sidg") or die("Couldn't Connect");
-			$Name="siddesh";
-			$query="select * from customer";
-			$Result=pg_query($conn,$query);
-
-
-			while($row=pg_fetch_assoc($Result)){
-				?>
-
-				<tr>
-					<td><?php echo$row["reg_no"]; ?></td>
-					<?php 
-						$_SESSION['session_reg_no'] = $row['reg_no']; 
-					?>
-					<td><?php echo$row["user_name"]; ?></td>
-					<td>Walk-in</td>
-					<td>
-						<form action=acceptServiceRequest.php method="post">
-							<input type="hidden" name="step" value="<?php echo $row["reg_no"];?>" />
-							<input type="submit" value="Check">
-						</form>
-					</td>
-				</tr>
+			include 'phpConn.php';
+			
+			$query=pg_query($conn,"select regno,username,usertype from service;");
+			$i=0;
+			while($row=pg_fetch_assoc($query)){
+				
+				echo "<tr><td>".++$i."</td><td>".$row['username']."</td><td>".$row['usertype']."</td>";
+				
+				?><td>
+					<form action="acceptServiceRequest.php" method = "post">
+						<input type = "hidden" name = "regno" value="<?php echo $row['regno'];?>">
+						<input type = "submit" value = "Check"> 
+					</form>
+					</td> </tr> 
 				<?php
-				}
-			?>
+			}
+		?>
 			
 </table>
 
@@ -98,21 +89,27 @@
 <table class="services" border="1">
 		<tr>
 			<th>Sr. no</th>
-			<th>Company</th>
+			<th>Username</th>
 			<th>Plan</th>
 			<th>Request</th>
 		</tr>
-		<tr>
-			<td>1.</td>
-			<td>TCS</td>
-			<td>Plan 1</td>
-			<td>
-				<form action=acceptAMC.php method="post">
-					<input type="hidden" name="step" value="<?php echo $row["reg_no"];?>" />
-					<input type="submit" value="Check">
-				</form>
-			</td>
-		</tr>
+		<?php
+
+			$query=pg_query($conn,"select regno,username,plan from amcservice;");
+			$i=0;
+			while($row=pg_fetch_assoc($query)){
+				
+				echo "<tr><td>".++$i."</td><td>".$row['username']."</td><td>".$row['plan']."</td>";
+				
+				?><td>
+					<form action="acceptAMC.php" method = "post">
+						<input type = "hidden" name = "regno" value="<?php echo $row['regno'];?>">
+						<input type = "submit" value = "Check"> 
+					</form>
+					</td> </tr> 
+				<?php
+			}
+		?>
 			
 </table>
 
