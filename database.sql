@@ -52,3 +52,5 @@ create table admin(
 	username varchar(50) primary key,
 	password varchar(50)
 );
+
+insert into admin values('sidg','sidg');

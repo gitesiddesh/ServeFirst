@@ -1,4 +1,23 @@
-<?php session_start(); ?>
+<?php 
+
+include 'sessionStart.php'; 
+include 'phpConn.php';
+
+	if(isset($_POST['regno'])){
+
+		$status=$_POST['status'];
+		$bill = $_POST['bill'];
+		$regno = $_POST['regno'];
+		$qstatus="update service set status='$status' where regno=$regno;";
+		$updateQuery = pg_query($conn,$qstatus);
+
+		if(isset($_POST['bill']))
+		{
+			$qbill ="update service set billamount= $bill where regno=$regno;";
+			$updateQuery = pg_query($conn,$qbill);
+		}	
+	}
+?>
 <!DOCTYPE html>
 <html lang="en-us">
 <head>
@@ -53,13 +72,22 @@
 			<th>Address</th>
 		</tr>
 
-		<tr>
-			<td>Siddesh</td>
-			<td>Walk-in</td>
-			<td>gitesiddesh@gmail.com</td>
-			<td>9011037400</td>
-			<td>Gayatri Building, Bharat colony, karvenagar, Pune.</td>
-		</tr>
+		<?php 
+			//include 'phpConn.php';
+			//$regno = $_POST['regno'];
+			$username = $_POST['username'];
+			$usertype = $_POST['usertype'];
+
+			if($usertype == "Walkin")
+				$query = pg_query($conn, "select email,contact,address from walkin where username='$username';");
+			else
+				$query = pg_query($conn, "select email,contact,address from corporate where username='$username';");
+
+			$row = pg_fetch_assoc($query);
+
+			echo "<tr><td>".$username."</td><td>".$usertype."</td><td>".$row['email']."</td><td>".$row['contact']."</td><td>".$row['address']."</td></tr>";
+		?>
+		
 </table>
 
 <div class="services-head">
@@ -76,27 +104,37 @@
 			<th>Address</th>
 			<th>Date</th>
 			<th>Time</th>
+			<th>Current Status</th>
 			<th>Status</th>
+			<th>Current Bill amount</th>
 			<th>Bill amount</th>
 		</tr>
 
-		<tr>
-			<td>1.</td>
-			<td>Laptop</td>
-			<td>Keyboard not working</td>
-			<td>Gayatri Building, Bharat colony, karvenagar, Pune.</td>
-			<td>12/12/2020</td>
-			<td>12:30 PM</td>
+	<?php
+
+	$query1 = pg_query($conn,"select * from service where username='$username' AND usertype='$usertype';");
+	$i = 0;
+	while($row=pg_fetch_assoc($query1))
+	{
+
+		echo "<tr><td>".$row['regno']."</td><td>".$row['helpfor']."</td><td>".$row['description']."</td><td>".$row['address']."</td><td>".$row['date']."</td><td>".$row['time']."</td><td>".$row['status']."</td>";
+		?>
 			<td>
-				<form>
-					<select>
-						<option selected>Pending</option>
-						<option>Accepted</option>
-						<option>working</option>
-						<option>Completed</option>
+				<form method="POST" action="acceptServiceRequest.php">
+					<select name= "status">
+						<option value="pending" selected>Pending</option>
+						<option value="accepted">Accepted</option>
+						<option value="in progress">in progress</option>
+						<option value="completed">Completed</option>
 					</select>
 			</td>
 			<td>
+				<?php echo $row['billamount'];?>
+			</td>
+			<td>
+				<input type="hidden" name="regno" value="<?php echo $row['regno']; ?>">
+				<input type="hidden" name="username" value="<?php echo $username; ?>">
+				<input type="hidden" name="usertype" value="<?php echo $usertype; ?>">
 				<input type="number" name="bill">
 			</td>
 			<td>
@@ -104,18 +142,12 @@
 			</form>
 			</td>
 		</tr>
+	<?php
+	}
+	?>	
 </table>
 
-<div class="footer">
-	<p>
-		Copyright <i class="material-icons" style="font-size: 1.3vw">copyright</i>
-		PC Care Computing Services &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; Made with 
-		<i class="material-icons" style="color: red;font-size: 1.3vw">favorite</i>
-		in Pune&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;
-		<a href="#">Contact us</a> &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; <a href="aboutus.html">About us</a>
-	</p>
-
-</div>
+<?php include 'footer.php'; ?>
 
 </body>
 </html>

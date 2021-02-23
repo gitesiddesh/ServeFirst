@@ -56,22 +56,25 @@
 			<th>Sr. no</th>
 			<th>User name</th>
 			<th>User type</th>
-			<th>Request</th>
+			<th>No of Requests</th>
+			<th>Details</th>
 		</tr>
 		<?php
 
 			include 'phpConn.php';
 			
-			$query=pg_query($conn,"select regno,username,usertype from service;");
+			$query=pg_query($conn,"select COUNT(USERNAME) AS COUNT,username,usertype from service group by username,usertype;");
 			$i=0;
 			while($row=pg_fetch_assoc($query)){
-				
-				echo "<tr><td>".++$i."</td><td>".$row['username']."</td><td>".$row['usertype']."</td>";
+
+				echo "<tr><td>".++$i."</td><td>".$row['username']."</td><td>".$row['usertype']."</td><td>".$row['count']."</td>";
 				
 				?><td>
 					<form action="acceptServiceRequest.php" method = "post">
-						<input type = "hidden" name = "regno" value="<?php echo $row['regno'];?>">
-						<input type = "submit" value = "Check"> 
+						<!--input type = "hidden" name = "regno" value="<?/*php echo $row['regno'];*/?>"-->
+						<input type = "hidden" name = "username" value="<?php echo $row['username'];?>">
+						<input type = "hidden" name = "usertype" value="<?php echo $row['usertype'];?>">
+						<input type = "submit" name="check" value = "Check"> 
 					</form>
 					</td> </tr> 
 				<?php
@@ -90,20 +93,20 @@
 		<tr>
 			<th>Sr. no</th>
 			<th>Username</th>
-			<th>Plan</th>
+			<th>No of Requests</th>
 			<th>Request</th>
 		</tr>
 		<?php
 
-			$query=pg_query($conn,"select regno,username,plan from amcservice;");
+			$query=pg_query($conn,"select COUNT(USERNAME) AS COUNT,username from amcservice group by username;");
 			$i=0;
 			while($row=pg_fetch_assoc($query)){
 				
-				echo "<tr><td>".++$i."</td><td>".$row['username']."</td><td>".$row['plan']."</td>";
+				echo "<tr><td>".++$i."</td><td>".$row['username']."</td><td>".$row['count']."</td>";
 				
 				?><td>
 					<form action="acceptAMC.php" method = "post">
-						<input type = "hidden" name = "regno" value="<?php echo $row['regno'];?>">
+						<input type = "hidden" name = "username" value="<?php echo $row['username'];?>">
 						<input type = "submit" value = "Check"> 
 					</form>
 					</td> </tr> 

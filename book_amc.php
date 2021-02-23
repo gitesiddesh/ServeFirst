@@ -48,7 +48,7 @@
 	<img src="images/Book_icon.png"><br>
 </div>
 <div class="login-form">
-	<form method="POST" action="test.php">
+	<form method="POST" action="book_amc.php">
 		<label>Pick up plan :</label>&nbsp;&nbsp; 
 		<select name="plan" required>
 			<option value="Plan1" selected>Plan 1</option>
