@@ -10,6 +10,7 @@
 	<link href='https://fonts.googleapis.com/css?family=Amita' rel='stylesheet'>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link href='https://fonts.googleapis.com/css?family=Autour One' rel='stylesheet'>
+	<script src="https://kit.fontawesome.com/45b48e2620.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="background">
