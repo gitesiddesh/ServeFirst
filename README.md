@@ -1,5 +1,5 @@
 # ServeFirst
-# College Project
+# College Project (Incomplete)
 Online promoting and booking IT solutions :
 A full working website is developed and host on a local server, on a
 Linux machine, using web technologies like HTML, CSS, JavaScript,
